@@ -8,7 +8,5 @@
 #ifndef KERNEL_H_
 #define KERNEL_H_
 
-#include "monitor.h"
-
 
 #endif /* KERNEL_H_ */

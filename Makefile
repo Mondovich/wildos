@@ -5,17 +5,22 @@ GCC=i686-elf-gcc.exe
 LINKER=i686-elf-ld.exe
 TARGET=kernel
 IMG=floppy.img
-GRUB=grub/stage1 grub/stage2 config/pad
+GRUB=grub/stage1 grub/stage2 grub/pad
 
+#./${BINDIR}/loader.o \#
 OBJS += \
-./${BINDIR}/loader.o \
-./${BINDIR}/common.o \
-./${BINDIR}/monitor.o \
-./${BINDIR}/kernel.o 
+./${BINDIR}/asm/gdt.o \
+./${BINDIR}/hw/io.o \
+./${BINDIR}/hw/memory.o \
+./${BINDIR}/hw/screen.o \
+./${BINDIR}/utils/string.o \
+./${BINDIR}/boot.o \
+./${BINDIR}/kernel.o
+
 
 A_FLAGS=-f elf
 C_FLAGS=-c -Wall -Wextra -nostdlib -nostartfiles -nodefaultlibs
-T_FLAG=-T ${SRCDIR}/linker.ld
+T_FLAG=-T ${SRCDIR}/link.ld
 
 all:	img
 
@@ -33,7 +38,7 @@ ${BINDIR}/%.o: ${SRCDIR}/%.cpp
 	@echo 'Finished building: $<'
 	@echo ' '
 	
-link: clean ${OBJS}
+link: ${OBJS}
 	@echo 'Linking files'
 	@echo 'Invoking: Cygwin Linker'
 	${LINKER} ${T_FLAG} -o ${OUTDIR}/${TARGET} ${OBJS}
@@ -42,13 +47,23 @@ link: clean ${OBJS}
 	
 img: link
 	@echo 'Making floppy image'
+	#@./initrd.sh ${OUTDIR}/pad_kernel
+	#cat  ${GRUB} ${OUTDIR}/${TARGET} ${OUTDIR}/pad_kernel initrd.img > ${OUTDIR}/${IMG}
 	cat  ${GRUB} ${OUTDIR}/${TARGET} > ${OUTDIR}/${IMG}
+	@echo 'Kernel blocks'
+	@du out/kernel -b --block-size=512 | cut -c 1-3
+	#@echo 'Initrd blocks'
+	#@du initrd.img -b --block-size=512 | cut -c 1-3
 	@echo 'done.'
 	@echo ' '
 	
 clean:
-	@echo 'Cleaning...'
-	rm -f -r ${BINDIR} ${OUTDIR}/${TARGET} ${OUTDIR}/${IMG}
-	mkdir build
+	@echo 'Cleaning...' 
+	rm -f -r ${BINDIR} ${OUTDIR}
+	mkdir ${BINDIR}
+	mkdir ${BINDIR}/asm
+	mkdir ${BINDIR}/hw
+	mkdir ${BINDIR}/utils
+	mkdir ${OUTDIR}
 	@echo 'done.'
 	@echo ' '
