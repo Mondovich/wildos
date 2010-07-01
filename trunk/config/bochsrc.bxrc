@@ -7,13 +7,13 @@ romimage: file="C:\Program Files\Bochs-2.4.5/BIOS-bochs-latest"
 vgaromimage: file="C:\Program Files\Bochs-2.4.5/VGABIOS-lgpl-latest"
 boot: floppy
 floppy_bootsig_check: disabled=0
-floppya: type=1_44, 1_44="C:\cygwin\home\RaimondoS\os\out\floppy.img", status=inserted
+floppya: type=1_44, 1_44="C:\cygwin\home\RaimondoS\WildOS\out\floppy.img", status=inserted
 # no floppyb
 ata0: enabled=1, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
+ata0-master: type=disk, mode=flat, translation=auto, path="C:\cygwin\home\RaimondoS\WildOS\c.img", cylinders=20, heads=16, spt=63, biosdetect=auto, model="Generic 1234"
 ata1: enabled=1, ioaddr1=0x170, ioaddr2=0x370, irq=15
 ata2: enabled=0
 ata3: enabled=0
-ata0-master: type=disk, path="C:\cygwin\home\RaimondoS\os\c.img", mode=flat, cylinders=20, heads=16, spt=63
 parport1: enabled=1, file=""
 parport2: enabled=0
 com1: enabled=1, mode=null, dev=""
@@ -37,7 +37,7 @@ ne2k: enabled=0
 pnic: enabled=0
 sb16: enabled=0
 # no loader
-log: "C:\cygwin\home\RaimondoS\os\log\bochsout.log"
+log: C:\cygwin\home\RaimondoS\WildOS\log\bochsout.log
 logprefix: %t%e%d
 panic: action=ask
 error: action=report

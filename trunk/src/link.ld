@@ -1,4 +1,4 @@
-ENTRY (loader)
+ENTRY (start)
 
 SECTIONS
 {
@@ -6,6 +6,7 @@ SECTIONS
 
 	.text ALIGN(4096) :
 	{
+		code = .; _code = .; __code = .;
 		*(.text*)
 		*(.gnu.linkonce.t*)
 	}
@@ -18,6 +19,8 @@ SECTIONS
 	
 	.data ALIGN(4096) :
 	{
+		data = .; _data = .; __data = .;
+	
 		start_ctors = .;
 		*(.ctor*)
 		end_ctors = .;
@@ -32,10 +35,13 @@ SECTIONS
 
 	.bss ALIGN(4096) :
 	{
+		bss = .; _bss = .; __bss = .;
 		*(.COMMON*)
 		*(.bss*)
 		*(.gnu.linkonce.b*)
 	}
+	
+	end = .; _end = .; __end = .;
 	
 	 /DISCARD/ :
 	 {
