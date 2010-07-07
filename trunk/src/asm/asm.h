@@ -19,9 +19,7 @@ do {                    \
 } while (/* CONSTCOND */ 0)
 
 #define halt()                      \
-do {                                \
-    printk ("System halted.\n");    \
-    asm ("hlt");                    \
-} while (/* CONSTCOND */ 0)
+	printk ("System halted.\n");    \
+	for (;;);
 
 #endif /* __ASM_H */

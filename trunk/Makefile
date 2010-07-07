@@ -7,14 +7,24 @@ TARGET=kernel
 IMG=floppy.img
 GRUB=grub/stage1 grub/stage2 grub/pad
 
-#./${BINDIR}/loader.o \#
 OBJS += \
+./${BINDIR}/asm/idt.o \
+./${BINDIR}/asm/int.o \
 ./${BINDIR}/asm/gdt.o \
+./${BINDIR}/asm/process.o \
+./${BINDIR}/boot/boot.o \
+./${BINDIR}/hw/kheap.o \
 ./${BINDIR}/hw/io.o \
+./${BINDIR}/hw/isr.o \
 ./${BINDIR}/hw/memory.o \
+./${BINDIR}/hw/paging.o \
 ./${BINDIR}/hw/screen.o \
+./${BINDIR}/hw/syscall.o \
+./${BINDIR}/hw/task.o \
+./${BINDIR}/hw/timer.o \
+./${BINDIR}/utils/array.o \
 ./${BINDIR}/utils/string.o \
-./${BINDIR}/boot.o \
+./${BINDIR}/utils/utils.o \
 ./${BINDIR}/kernel.o
 
 
@@ -51,9 +61,9 @@ img: link
 	#cat  ${GRUB} ${OUTDIR}/${TARGET} ${OUTDIR}/pad_kernel initrd.img > ${OUTDIR}/${IMG}
 	cat  ${GRUB} ${OUTDIR}/${TARGET} > ${OUTDIR}/${IMG}
 	@echo 'Kernel blocks'
-	@du out/kernel -b --block-size=512 | cut -c 1-3
+	@du out/kernel -b --block-size=512
 	#@echo 'Initrd blocks'
-	#@du initrd.img -b --block-size=512 | cut -c 1-3
+	#@du initrd.img -b --block-size=512
 	@echo 'done.'
 	@echo ' '
 	
@@ -62,6 +72,7 @@ clean:
 	rm -f -r ${BINDIR} ${OUTDIR}
 	mkdir ${BINDIR}
 	mkdir ${BINDIR}/asm
+	mkdir ${BINDIR}/boot
 	mkdir ${BINDIR}/hw
 	mkdir ${BINDIR}/utils
 	mkdir ${OUTDIR}

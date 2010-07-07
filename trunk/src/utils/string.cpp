@@ -6,6 +6,7 @@
  */
 #include "string.h"
 #include "../types.h"
+#include "../utils/utils.h"
 
 size_t strlen(const char *s) {
 	uint16_t i = 0;
@@ -65,8 +66,8 @@ char *strrev(char *s) {
 	return s;
 }
 
-char *itoa(int value, char *str, int base) {
-	uint32_t tmp;
+char *itoa(uint32_t value, char *str, uint32_t base) {
+	int tmp;
 	int i = 0;
 
 	do {
