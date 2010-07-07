@@ -26,5 +26,7 @@ void puts(const char *c);
 void puts(int c);
 // Output a null-terminated ASCII string to the monitor.
 void fputs(const char *c);
+// Output a formatted null-terminated ASCII string to the monitor
+int printk (char *format, ...);
 
 #endif /* SCREEN_H_ */

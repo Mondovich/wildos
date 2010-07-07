@@ -15,6 +15,6 @@ char *strcpy(char *dst, const char *src);
 char *strncpy (char *dst, const char *src, size_t n);
 char *strcat(char *dst, const char *src);
 char *strrev(char *s);
-char *itoa(int value, char *str, int base);
+char *itoa(uint32_t value, char *str, uint32_t base);
 
 #endif /* STRING_H_ */

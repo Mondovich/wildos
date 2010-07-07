@@ -8,6 +8,7 @@
 #include "screen.h"
 #include "../utils/string.h"
 #include "../types.h"
+#include "../stdarg.h"
 
 uint16_t *video_memory = (uint16_t *) VGA_MONO;
 int8_t kx = 0;
@@ -101,7 +102,7 @@ void puts(const char *c) {
 	putchar('\n');
 	return;
 }
-void puts(int c){
+void puts(int c) {
 	char *n;
 	itoa(c, n, 10);
 	puts(n);
@@ -111,4 +112,87 @@ void fputs(const char *c) {
 	while (*c)
 		putchar(*c++);
 	return;
+}
+
+int printk(char *format, ...) {
+	int i, j, size, buflen, neg;
+	va_list ap;
+	char buf[16];
+
+	unsigned char c;
+	int32_t ival;
+	uint32_t uival;
+
+	va_start(ap, format);
+
+	while ((c = *format++)) {
+		size = neg = 0;
+
+		if (c == 0)
+			break;
+		else if (c == '%') {
+			c = *format++;
+			if (c >= '0' && c <= '9') {
+				size = c - '0';
+				c = *format++;
+			}
+
+			if (c == 'd' || c == 'i' || c == 'b') {
+				ival = va_arg (ap, int);
+				if (ival < 0) {
+					uival = 0 - ival;
+					neg++;
+				} else
+					uival = ival;
+
+				itoa(uival, buf, 10);
+				buflen = strlen(buf);
+				if (buflen < size)
+					for (i = size, j = buflen; i >= 0; --i, --j)
+						buf[i] = (j >= 0) ? buf[j] : '0';
+
+				if (neg)
+					printk("-%s", buf);
+				else
+					printk(buf);
+			} else if (c == 'u') {
+				uival = va_arg (ap, int);
+				itoa(uival, buf, 10);
+
+				buflen = strlen(buf);
+				if (buflen < size)
+					for (i = size, j = buflen; i >= 0; --i, --j)
+						buf[i] = (j >= 0) ? buf[j] : '0';
+
+				printk(buf);
+			} else if (c == 'x' || c == 'X') {
+				uival = va_arg (ap, int);
+				itoa(uival, buf, 16);
+
+				buflen = strlen(buf);
+				if (buflen < size)
+					for (i = size, j = buflen; i >= 0; --i, --j)
+						buf[i] = (j >= 0) ? buf[j] : '0';
+
+				printk("0x%s", buf);
+			} else if (c == 'p') {
+				uival = va_arg (ap, int);
+				itoa(uival, buf, 16);
+				size = 8;
+
+				buflen = strlen(buf);
+				if (buflen < size)
+					for (i = size, j = buflen; i >= 0; --i, --j)
+						buf[i] = (j >= 0) ? buf[j] : '0';
+
+				printk("0x%s", buf);
+			} else if (c == 's') {
+				printk((char *) va_arg (ap, int));
+			} else if (c == 'c') {
+				putchar(va_arg (ap, int));
+			}
+		} else
+			putchar(c);
+	}
+	return 0;
 }

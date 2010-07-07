@@ -2,7 +2,7 @@
 ; boot.asm -- Kernel start location. Also defines multiboot header.
 ;           Based on Bran's kernel development tutorial file start.asm
 ;
-
+section .boot
 MBOOT_PAGE_ALIGN    equ 1<<0    ; Load kernel and modules on a page boundary
 MBOOT_MEM_INFO      equ 1<<1    ; Provide your kernel with memory info
 MBOOT_HEADER_MAGIC  equ 0x1BADB002 ; Multiboot Magic value
@@ -33,6 +33,7 @@ mboot:
     dd  end                     ; End of kernel.
     dd  start                   ; Kernel entry point (initial EIP).
 
+section .text
 [GLOBAL start]                  ; Kernel entry point.
 [EXTERN _kmain]                 ; This is the entry point of our C code
 
@@ -49,5 +50,7 @@ start:
     jmp $                       ; Enter an infinite loop, to stop the processor
                                 ; executing whatever rubbish is in the memory
                                 ; after our kernel!
+section .bss
+align 32
 stack:
-   resb STACKSIZE                     ; reserve 16k stack on a doubleword boundary
+   resb STACKSIZE               ; reserve 16k stack on a doubleword boundary
