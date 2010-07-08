@@ -23,7 +23,7 @@ typedef struct task {
 } task_t;
 
 // Initialises the tasking system.
-void initialise_tasking();
+void init_tasking();
 
 // Called by the timer hook, this changes the running process.
 void switch_task();

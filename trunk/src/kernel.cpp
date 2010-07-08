@@ -45,25 +45,40 @@ extern "C" void _kmain(struct multiboot_t *mboot_ptr, size_t initial_stack) {
 	init_paging();
 	puts("[ok]");
 
-	printk("a = %x\n", a);
-	int32_t b = (int32_t) kmalloc(8);
-	printk("b = %X\n", b);
-	int32_t c = (int32_t) kmalloc(8);
-	printk("c = %x\n", c);
-	kfree((void *)b);
-	kfree((void *)c);
-	int32_t d = (int32_t) kmalloc(16);
-	printk("d = %x\n", d);
+	// Start multitasking.
+	fputs("Initializing multitasking...");
+	init_tasking();
+	puts("[ok]");
 
 	fputs("Initializing syscalls...");
 	initialise_syscalls();
 	puts("[ok]");
 
-	fputs("Switching to user mode...");
-	switch_to_user_mode();
-	puts("[ok]");
+	// Create a new process in a new address space which is a clone of this.
+	int ret = fork();
 
-	syscall_fputs("Hello, user world!\n");
+	cli();
+
+	printk("fork() returned %x, and getpid() returned %x\n", ret, getpid());
+	puts("==============================================");
+
+	printk("a = %x\n", a);
+	int32_t b = (int32_t) kmalloc(8);
+	printk("b = %X\n", b);
+	int32_t c = (int32_t) kmalloc(8);
+	printk("c = %x\n", c);
+	kfree((void *) b);
+	kfree((void *) c);
+	int32_t d = (int32_t) kmalloc(16);
+	printk("d = %x\n", d);
+
+	sti();
+
+	//	fputs("Switching to user mode...");
+	//	switch_to_user_mode();
+	//	puts("[ok]");
+
+	//	syscall_fputs("Hello, user world!\n");
 
 	return;
 
