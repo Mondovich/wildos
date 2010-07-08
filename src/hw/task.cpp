@@ -27,7 +27,7 @@ extern "C" size_t read_eip();
 // The next available process ID.
 uint32_t next_pid = 1;
 
-void initialise_tasking() {
+void init_tasking() {
 	// Rather important stuff happening, no interrupts please!
 	cli();
 
