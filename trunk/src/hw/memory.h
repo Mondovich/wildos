@@ -12,13 +12,14 @@
 #define MEMORY_H_
 
 void *memset(void *ptr, int value, size_t num);
-void *memcpy(void *destination, const void *source, size_t num);
+extern "C" void *memcpy(void *destination, const void *source, size_t num);
 int memcmp(const void * ptr1, const void * ptr2, size_t num);
 
 extern "C" void gdt_flush (uint32_t addr);
 extern "C" void idt_flush (uint32_t addr);
 extern "C" void tss_flush();
 
+void init_descriptor_tables();
 void init_idt (void);
 void init_gdt (void);
 

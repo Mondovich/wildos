@@ -5,16 +5,16 @@
  *      Author: RaimondoS
  */
 #include "timer.h"
+#include "task.h"
 #include "../types.h"
 #include "screen.h"
 #include "isr.h"
 #include "io.h"
 #include "memory.h"
-#include "task.h"
 
 uint32_t tick = 0;
 
-static void timer_callback (struct registers_t *regs)
+static void timer_callback (registers_t *regs)
 {
     tick++;
     switch_task();

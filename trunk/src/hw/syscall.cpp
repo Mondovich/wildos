@@ -12,9 +12,10 @@
 static void syscall_handler(registers_t *regs);
 
 DEFN_SYSCALL1(fputs, 0, const char*);
+DEFN_SYSCALL1N(printk, 1, const char*, ...);
 
-static void *syscalls[1] = { (void*)&fputs };
-uint32_t num_syscalls = 1;
+#define num_syscalls  2
+static void *syscalls[num_syscalls] = { (void*)&fputs , (void*)&printk };
 
 void initialise_syscalls() {
 	// Register our syscall handler.

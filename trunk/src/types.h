@@ -8,7 +8,10 @@
 #ifndef TYPES_H_
 #define TYPES_H_
 
-typedef unsigned int 		size_t;
+#define NULL 0
+
+typedef long unsigned int	long_size_t;
+typedef long unsigned int 	size_t;
 
 typedef unsigned            uint;
 typedef unsigned char       uint8_t;

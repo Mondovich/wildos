@@ -35,6 +35,8 @@ mboot:
 
 section .text
 [GLOBAL start]                  ; Kernel entry point.
+[EXTERN _main]      			; This is the entry point of our C++ code
+[EXTERN __main]					; This is the entry point of our C code
 [EXTERN _kmain]                 ; This is the entry point of our C code
 
 start:
@@ -46,7 +48,9 @@ start:
 
     ; Execute the kernel:
     cli                         ; Disable interrupts.
-    call _kmain                 ; call our kmain() function.
+	call __main                 ; Call Ctor and Dtor.
+	call _main                  ; Call our main() function.
+    ;call _kmain                ; call our kmain() function.
     jmp $                       ; Enter an infinite loop, to stop the processor
                                 ; executing whatever rubbish is in the memory
                                 ; after our kernel!

@@ -9,7 +9,7 @@
 #define TSS_H_
 
 // A struct describing a Task State Segment.
-struct tss_entry_t
+typedef struct
 {
     size_t prev_tss;   // The previous TSS - if we used hardware task switching this would form a linked list.
     size_t esp0;       // The stack pointer to load when we change to kernel mode.
@@ -39,6 +39,6 @@ struct tss_entry_t
     uint16_t trap;
     uint16_t iomap_base;
 
-} __attribute__((packed));
+} __attribute__((packed)) tss_entry_t;
 
 #endif /* TSS_H_ */
