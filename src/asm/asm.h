@@ -8,18 +8,27 @@
 #ifndef __ASM_H
 #define __ASM_H
 
-#define cli()    asm volatile ("cli")
-#define sti()    asm volatile ("sti")
+#include "../types.h"
+
+enum REGS {
+	EAX, EBX, EBP, ESP, CR0, CR3
+};
+
+#define disableInt()    asm volatile ("cli");
+#define enableInt()    asm volatile ("sti");
 
 #define reboot()        \
 do {                    \
-    cli ();             \
+	disableInt();             \
     outb (0x64, 0xFE);  \
-    sti ();             \
+    enableInt ();             \
 } while (/* CONSTCOND */ 0)
 
 #define halt()                      \
 	printk ("System halted.\n");    \
 	for (;;);
+
+size_t getRegister(REGS reg);
+void setRegister(REGS reg, size_t value);
 
 #endif /* __ASM_H */

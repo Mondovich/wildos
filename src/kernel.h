@@ -8,5 +8,11 @@
 #ifndef KERNEL_H_
 #define KERNEL_H_
 
+class Kernel {
+public:
+	Kernel();
+	virtual ~Kernel();
+	void run();
+};
 
 #endif /* KERNEL_H_ */

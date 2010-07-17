@@ -12,11 +12,19 @@
 #include "tss.h"
 #include "../types.h"
 
-struct gdt_entry_t gdt_entries[6];
-struct gdt_t p_gdt;
-struct idt_entry_t idt_entries[256];
-struct idt_t p_idt;
-struct tss_entry_t tss_entry;
+gdt_entry_t gdt_entries[6];
+gdt_t p_gdt;
+idt_entry_t idt_entries[256];
+idt_t p_idt;
+tss_entry_t tss_entry;
+
+// Initialisation routine - zeroes all the interrupt service routines,
+// initialises the GDT and IDT.
+void init_descriptor_tables() {
+	// Initialise the global descriptor table.
+	init_gdt();
+	init_idt();
+}
 
 void *memset(void *ptr, int value, size_t num) {
 	char *p = (char *) ptr;

@@ -6,6 +6,7 @@
  */
 
 #include "screen.h"
+#include "io.h"
 #include "../utils/string.h"
 #include "../types.h"
 #include "../stdarg.h"
@@ -14,34 +15,47 @@ uint16_t *video_memory = (uint16_t *) VGA_MONO;
 int8_t kx = 0;
 int8_t ky = 0;
 
+// Updates the hardware cursor.
+static void move_cursor() {
+	// The screen is 80 characters wide...
+	uint16_t cursorLocation = ky * SCREENCOLS + kx;
+	outb(0x3D4, 14); // Tell the VGA board we are setting the high cursor byte.
+	outb(0x3D5, cursorLocation >> 8); // Send the high cursor byte.
+	outb(0x3D4, 15); // Tell the VGA board we are setting the low cursor byte.
+	outb(0x3D5, cursorLocation); // Send the low cursor byte.
+}
+
 // Clear the screen to all black.
 void clear() {
-	for (int i = 0; i < SIZESCREEN; i++)
-		video_memory[i] = 0;
+	// Get a space character with the default colour attributes.
+	uint8_t attributeByte = (0 /*black*/<< 4) | (15 /*white*/& 0x0F);
+	uint16_t blank = 0x20 /* space */| (attributeByte << 8);
+
+	for (int i = 0; i < SCREENSIZE; i++)
+		video_memory[i] = blank;
 
 	kx = ky = 0;
 	return;
 }
 // Scrolls the text on the screen up by n line.
 void scrollup(int n) {
-	uint16_t *video, *tmp;
+	// Get a space character with the default colour attributes.
+	uint8_t attributeByte = (0 /*black*/<< 4) | (15 /*white*/& 0x0F);
+	uint16_t blank = 0x20 /* space */| (attributeByte << 8);
 
-	for (video = video_memory; video < (uint16_t *) SCREENLIM; video += 2) {
-		tmp = video + n * SCREENCOLS * 2;
-
-		if (tmp < (uint16_t *) SCREENLIM) {
-			*video = *tmp;
-			*(video + 1) = *(tmp + 1);
+	// Move the current text chunk that makes up the screen
+	// back in the buffer by a line
+	int i;
+	for (i = 0; i < SCREENSIZE; i++) {
+		if (i < SCREENSIZE - n * SCREENCOLS) {
+			video_memory[i] = video_memory[i + n * SCREENCOLS];
 		} else {
-			*video = 0;
-			*(video + 1) = 0x07;
+			video_memory[i] = blank;
 		}
 	}
 
-	ky -= n;
-	if (ky < 0)
-		ky = 0;
-	return;
+	// The cursor should now be on the last line.
+	ky = SCREENROWS - n;
 }
 // Write a single character out to the screen.
 void putchar(char c) {
@@ -90,8 +104,12 @@ void putchar(char c) {
 		break;
 	}
 
-	if (ky > SCREENROWS)
-		scrollup(ky - 24);
+	if (ky > SCREENROWS - 1) {
+		scrollup(ky - (SCREENROWS - 1));
+	}
+
+	// Move the hardware cursor.
+	move_cursor();
 
 	return;
 }
@@ -102,10 +120,10 @@ void puts(const char *c) {
 	putchar('\n');
 	return;
 }
-void puts(int c) {
-	char *n;
-	itoa(c, n, 10);
-	puts(n);
+void puts(int i) {
+	char *c = "";
+	itoa(i, c, 10);
+	puts(c);
 }
 // Output a null-terminated ASCII string to the monitor
 void fputs(const char *c) {

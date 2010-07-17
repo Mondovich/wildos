@@ -3,54 +3,17 @@
 
 <cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 <storageModule moduleId="org.eclipse.cdt.core.settings">
-<cconfiguration id="0.356439221">
-<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.356439221" moduleId="org.eclipse.cdt.core.settings" name="Default">
+<cconfiguration id="0.1882351706">
+<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.1882351706" moduleId="org.eclipse.cdt.core.settings" name="Default">
 <externalSettings/>
 <extensions>
-<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="org.eclipse.cdt.core.VCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 <extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 <extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 <extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 <extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 </extensions>
 </storageModule>
-<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<configuration artifactName="kernel" buildProperties="" description="" id="0.356439221" name="Default" parent="org.eclipse.cdt.build.core.prefbase.cfg" postbuildStep="copy /b grub\stage1+grub\stage2+config\pad+Default\kernel+config\menu.cfg   out\floppy.img">
-<folderInfo id="0.356439221." name="/" resourcePath="">
-<toolChain id="cdt.managedbuild.toolchain.gnu.cygwin.base.1740222912" name="Cygwin GCC" superClass="cdt.managedbuild.toolchain.gnu.cygwin.base">
-<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.cygwin.base.390602095" name="Debug Platform" osList="win32" superClass="cdt.managedbuild.target.gnu.platform.cygwin.base"/>
-<builder autoBuildTarget="all" buildPath="${workspace_loc:/OS}" cleanBuildTarget="clean" enableAutoBuild="true" enableCleanBuild="true" enabledIncrementalBuild="true" id="cdt.managedbuild.target.gnu.builder.cygwin.base.1594002694" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelizationNumber="1" superClass="cdt.managedbuild.target.gnu.builder.cygwin.base"/>
-<tool command="nasm" id="cdt.managedbuild.tool.gnu.assembler.cygwin.base.1246541038" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.cygwin.base">
-<option id="gnu.both.asm.option.flags.2117944728" name="Assembler flags" superClass="gnu.both.asm.option.flags" value="-f elf" valueType="string"/>
-<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1976624211" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
-</tool>
-<tool id="cdt.managedbuild.tool.gnu.archiver.cygwin.base.586465690" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.cygwin.base"/>
-<tool command="i686-elf-g++.exe" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG}${OUTPUT_PREFIX} ${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.base.1829879773" name="Cygwin C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.base">
-<option id="gnu.cpp.compiler.option.other.other.1663841193" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -Wextra -nostdlib -nostartfiles -nodefaultlibs" valueType="string"/>
-<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.cygwin.421866637" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input.cygwin"/>
-</tool>
-<tool command="i686-elf-gcc.exe" id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.base.649612212" name="Cygwin C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.base">
-<option id="gnu.c.compiler.option.include.paths.1627905433" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths"/>
-<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.cygwin.284530879" superClass="cdt.managedbuild.tool.gnu.c.compiler.input.cygwin"/>
-</tool>
-<tool id="cdt.managedbuild.tool.gnu.c.linker.cygwin.base.357005309" name="Cygwin C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.cygwin.base"/>
-<tool command="i686-elf-ld.exe" id="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.base.1969228571" name="Cygwin C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.base">
-<option id="gnu.cpp.link.option.nostdlibs.574051195" name="No startup or default libs (-nostdlib)" superClass="gnu.cpp.link.option.nostdlibs" value="false" valueType="boolean"/>
-<option id="gnu.cpp.link.option.nostart.1768801229" name="Do not use standard start files (-nostartfiles)" superClass="gnu.cpp.link.option.nostart" value="false" valueType="boolean"/>
-<option id="gnu.cpp.link.option.nodeflibs.593309013" name="Do not use default libraries (-nodefaultlibs)" superClass="gnu.cpp.link.option.nodeflibs" value="false" valueType="boolean"/>
-<option id="gnu.cpp.link.option.flags.1397474419" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-T &quot;${workspace_loc:/OS/src/linker.ld}&quot;" valueType="string"/>
-<option id="gnu.cpp.link.option.userobjs.808774163" name="Other objects" superClass="gnu.cpp.link.option.userobjs"/>
-<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1846598305" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
-<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
-<additionalInput kind="additionalinput" paths="$(LIBS)"/>
-</inputType>
-</tool>
-</toolChain>
-</folderInfo>
-</configuration>
-</storageModule>
-<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 <storageModule moduleId="scannerConfiguration">
 <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 <profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
@@ -300,10 +263,31 @@
 </profile>
 </scannerConfigBuildInfo>
 </storageModule>
-<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+<configuration artifactName="wildos.test" buildProperties="" description="" id="0.1882351706" name="Default" parent="org.eclipse.cdt.build.core.prefbase.cfg">
+<folderInfo id="0.1882351706." name="/" resourcePath="">
+<toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.1285482519" name="No ToolChain" resourceTypeBasedDiscovery="true" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
+<targetPlatform id="org.eclipse.cdt.build.core.prefbase.toolchain.1285482519.464837663" name=""/>
+<builder autoBuildTarget="all" cleanBuildTarget="clean" enableAutoBuild="true" enableCleanBuild="true" enabledIncrementalBuild="true" id="org.eclipse.cdt.build.core.settings.default.builder.1450200302" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelizationNumber="1" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>
+<tool id="org.eclipse.cdt.build.core.settings.holder.libs.2082679584" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
+<tool id="org.eclipse.cdt.build.core.settings.holder.1604889008" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
+<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.755879057" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+</tool>
+<tool id="org.eclipse.cdt.build.core.settings.holder.143812478" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
+<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.574864320" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+</tool>
+<tool id="org.eclipse.cdt.build.core.settings.holder.2075980629" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">
+<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.13982444" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+</tool>
+</toolChain>
+</folderInfo>
+</configuration>
+</storageModule>
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 </cconfiguration>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<project id="OS.null.1132263214" name="OS"/>
+<project id="wildos.test.null.703531288" name="wildos.test"/>
 </storageModule>
 </cproject>

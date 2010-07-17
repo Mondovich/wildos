@@ -15,6 +15,14 @@ SECTIONS
 
     .data :
     {
+    	start_ctors = .;
+		*(.ctor*)
+		end_ctors = .;
+
+		start_dtors = .;
+		*(.dtor*)
+		end_dtors = .;
+		
         data = .; _data = .; __data = .;
         *(.data)
         *(.rodata)
@@ -30,9 +38,4 @@ SECTIONS
 
     end = .; _end = .; __end = .;
     
-    /DISCARD/ :
-	 {
-		*(.comment)
-		*(.eh_frame) /* You should discard this unless you're implementing runtime support for C++ exceptions. */
-	 }
 }

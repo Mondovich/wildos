@@ -29,7 +29,7 @@ uint32_t next_pid = 1;
 
 void init_tasking() {
 	// Rather important stuff happening, no interrupts please!
-	cli();
+	disableInt();
 
 	// Relocate the stack so we know where it is.
 	move_stack((void*) 0xE0000000, 0x2000);
@@ -41,16 +41,15 @@ void init_tasking() {
 	current_task->eip = 0;
 	current_task->page_directory = current_directory;
 	current_task->next = 0;
-	current_task->kernel_stack = kmalloc(KERNEL_STACK_SIZE, true);
+	current_task->kernel_stack = (size_t) kmalloc(KERNEL_STACK_SIZE, true);
 
 	// Reenable interrupts.
-	sti();
+	enableInt();
 }
 
 void move_stack(void *new_stack_start, size_t size) {
 	// Allocate some space for the new stack.
-	for (size_t i = (size_t) new_stack_start; i >= ((size_t) new_stack_start
-			- size); i -= 0x1000) {
+	for (size_t i = (size_t) new_stack_start; i >= ((size_t) new_stack_start - size); i -= 0x1000) {
 		// General-purpose stack is in user-mode.
 		alloc_frame(get_page(i, 1, current_directory), 0 /* User mode */, 1 /* Is writable */);
 	}
@@ -74,13 +73,11 @@ void move_stack(void *new_stack_start, size_t size) {
 	size_t new_base_pointer = old_base_pointer + offset;
 
 	// Copy the stack.
-	memcpy((void*) new_stack_pointer, (void*) old_stack_pointer, initial_esp
-			- old_stack_pointer);
+	memcpy((void*) new_stack_pointer, (void*) old_stack_pointer, initial_esp - old_stack_pointer);
 
 	// Backtrace through the original stack, copying new values into
 	// the new stack.
-	for (size_t i = (size_t) new_stack_start; i > (size_t) new_stack_start
-			- size; i -= 4) {
+	for (size_t i = (size_t) new_stack_start; i > (size_t) new_stack_start - size; i -= 4) {
 		size_t tmp = *(size_t*) i;
 		// If the value of tmp is inside the range of the old stack, assume it is a base pointer
 		// and remap it. This will unfortunately remap ANY value in this range, whether they are
@@ -165,7 +162,7 @@ void switch_task() {
 }
 int fork() {
 	// We are modifying kernel structures, and so cannot be interrupted.
-	cli();
+	disableInt();
 
 	// Take a pointer to this process' task struct for later reference.
 	task_t *parent_task = (task_t*) current_task;
@@ -179,7 +176,7 @@ int fork() {
 	new_task->esp = new_task->ebp = 0;
 	new_task->eip = 0;
 	new_task->page_directory = directory;
-	current_task->kernel_stack = kmalloc(KERNEL_STACK_SIZE, true);
+	current_task->kernel_stack = (size_t) kmalloc(KERNEL_STACK_SIZE, true);
 	new_task->next = 0;
 
 	// Add it to the end of the ready queue.
@@ -204,7 +201,7 @@ int fork() {
 		new_task->ebp = ebp;
 		new_task->eip = eip;
 		// All finished: Reenable interrupts.
-		sti();
+		enableInt();
 
 		// And by convention return the PID of the child.
 		return new_task->id;

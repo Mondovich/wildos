@@ -17,7 +17,7 @@ typedef struct task {
 	int id; // Process ID.
 	size_t esp, ebp; // Stack and base pointers.
 	size_t eip; // Instruction pointer.
-	struct page_directory_t *page_directory; // Page directory.
+	page_directory_t *page_directory; // Page directory.
 	size_t kernel_stack; // Kernel stack location.
 	struct task *next; // The next task in a linked list.
 } task_t;

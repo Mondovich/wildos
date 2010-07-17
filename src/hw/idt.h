@@ -12,24 +12,24 @@
  * \struct idt_entry_t
  * \brief Structure describing an interrupt gate.
  */
-struct idt_entry_t
+typedef struct idt_entry_t
 {
     uint16_t base_low;  /*!< The lower 16 bits of the address to jump when this interrupt fires. */
     uint16_t sel;       /*!< Kernel segment selector. */
     uint8_t  unused;    /*!< This must always be zero. */
     uint8_t  flags;     /*!< More flag. See documentation. */
     uint16_t base_high; /*!< The upper 16 bits of the address to jump to. */
-} __attribute__ ((packed));
+} __attribute__ ((packed)) idt_entry_t;
 
 /*!
  * \struct idt_t
  * \brief Address of the IDT (base/limit).
  */
-struct idt_t
+typedef struct
 {
     uint16_t limit;
     uint32_t base;  /*!< The address of the first element in our idt_entry_t array. */
-} __attribute__ ((packed));
+} __attribute__ ((packed)) idt_t;
 
 /* Extern directives let us access the addresses of our ASM ISR handlers */
 
@@ -82,6 +82,5 @@ extern "C" void irq12 (void);
 extern "C" void irq13 (void);
 extern "C" void irq14 (void);
 extern "C" void irq15 (void);
-
 
 #endif /* IDT_H_ */
