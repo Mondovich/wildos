@@ -8,7 +8,7 @@
 #ifndef MULTIBOOT_H
 #define MULTIBOOT_H
 
-#include "../types.h"
+#include "../common/types.h"
 
 #define MULTIBOOT_FLAG_MEM     0x001
 #define MULTIBOOT_FLAG_DEVICE  0x002
@@ -22,22 +22,6 @@
 #define MULTIBOOT_FLAG_APM     0x200
 #define MULTIBOOT_FLAG_VBE     0x400
 
-struct {
-	uint32_t num;
-	uint32_t size;
-	uint32_t addr;
-	uint32_t shndx;
-} elf_sec;
-
-struct {
-	uint32_t control_info;
-	uint32_t mode_info;
-	uint32_t mode;
-	uint32_t interface_seg;
-	uint32_t interface_off;
-	uint32_t interface_len;
-
-} vbe;
 struct multiboot_t {
 	uint32_t flags;
 	uint32_t mem_lower;
@@ -47,7 +31,12 @@ struct multiboot_t {
 	uint32_t mods_count;
 	uint32_t mods_addr;
 
-	struct elf_sec;
+	struct elf_sec {
+		uint32_t num;
+		uint32_t size;
+		uint32_t addr;
+		uint32_t shndx;
+	} elf_sec_t;
 
 	uint32_t mmap_length;
 	uint32_t mmap_addr;
@@ -57,7 +46,15 @@ struct multiboot_t {
 	uint32_t boot_loader_name;
 	uint32_t apm_table;
 
-	struct vbe;
+	struct vbe {
+		uint32_t control_info;
+		uint32_t mode_info;
+		uint32_t mode;
+		uint32_t interface_seg;
+		uint32_t interface_off;
+		uint32_t interface_len;
+
+	} vbe_t;
 }__attribute__((packed));
 
 typedef struct multiboot_header multiboot_header_t;
@@ -65,12 +62,14 @@ typedef struct multiboot_header multiboot_header_t;
 class Multiboot {
 	struct multiboot_t *mboot_ptr;
 public:
-	Multiboot();
-	Multiboot(struct multiboot_t *);
 	virtual ~Multiboot();
 
+	void init(struct multiboot_t *mboot_ptr) {
+		this->mboot_ptr = mboot_ptr;
+	}
+
 	uint32_t getAddr() const {
-		return mboot_ptr->elf_sec->addr;
+		return mboot_ptr->elf_sec_t.addr;
 	}
 
 	uint32_t getApm_table() const {
@@ -81,8 +80,8 @@ public:
 		return mboot_ptr->boot_device;
 	}
 
-	uint32_t getBoot_loader_name() const {
-		return mboot_ptr->boot_loader_name;
+	char *getBoot_loader_name() const {
+		return (char *) mboot_ptr->boot_loader_name;
 	}
 
 	uint32_t getCmdline() const {
@@ -94,7 +93,7 @@ public:
 	}
 
 	uint32_t getControl_info() const {
-		return mboot_ptr->vbe->control_info;
+		return mboot_ptr->vbe_t.control_info;
 	}
 
 	uint32_t getDrives_addr() const {
@@ -110,15 +109,15 @@ public:
 	}
 
 	uint32_t getInterface_len() const {
-		return mboot_ptr->interface_len;
+		return mboot_ptr->vbe_t.interface_len;
 	}
 
 	uint32_t getInterface_off() const {
-		return mboot_ptr->interface_off;
+		return mboot_ptr->vbe_t.interface_off;
 	}
 
 	uint32_t getInterface_seg() const {
-		return mboot_ptr->interface_seg;
+		return mboot_ptr->vbe_t.interface_seg;
 	}
 
 	uint32_t getMem_lower() const {
@@ -138,11 +137,11 @@ public:
 	}
 
 	uint32_t getMode() const {
-		return mboot_ptr->mode;
+		return mboot_ptr->vbe_t.mode;
 	}
 
 	uint32_t getMode_info() const {
-		return mboot_ptr->mode_info;
+		return mboot_ptr->vbe_t.mode_info;
 	}
 
 	uint32_t getMods_addr() const {
@@ -154,16 +153,21 @@ public:
 	}
 
 	uint32_t getNum() const {
-		return mboot_ptr->num;
+		return mboot_ptr->elf_sec_t.num;
 	}
 
 	uint32_t getShndx() const {
-		return mboot_ptr->shndx;
+		return mboot_ptr->elf_sec_t.shndx;
 	}
 
 	uint32_t getSize() const {
-		return mboot_ptr->size;
+		return mboot_ptr->elf_sec_t.size;
 	}
+	static Multiboot *instance();
+
+private:
+	Multiboot();
+	static Multiboot *instance_;
 };
 
 #endif

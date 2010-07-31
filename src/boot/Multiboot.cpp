@@ -7,11 +7,15 @@
 
 #include "multiboot.h"
 
-Multiboot::Multiboot() {}
-Multiboot::~Multiboot() {}
+Multiboot* Multiboot::instance_ = NULL;
 
-Multiboot::Multiboot(struct multiboot_t *mboot_ptr) {
-	this->mboot_ptr = mboot_ptr;
+Multiboot::Multiboot() {
+}
+Multiboot::~Multiboot() {
 }
 
-
+Multiboot *Multiboot::instance() {
+	if (!instance_)
+		instance_ = new Multiboot;
+	return instance_;
+}

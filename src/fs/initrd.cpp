@@ -3,7 +3,7 @@
 
 #include "initrd.h"
 #include "../hw/kheap.h"
-#include "../hw/memory.h"
+#include "../hw/memory/MemoryManager.h"
 #include "../utils/string.h"
 
 initrd_header_t *initrd_header; // The header.

@@ -1,0 +1,15 @@
+Lower memory: 636
+Upper memory: 31680
+WildOS booting up...
+Initializing descriptor tables...DEBUG  src/hw/memory/MemoryManager.cpp:29 - Init GDT
+DEBUG  src/hw/memory/GDT.cpp:13 - init
+DEBUG  src/hw/memory/GDT.cpp:16 - setGate
+DEBUG  src/hw/memory/GDT.cpp:22 - write TSS
+DEBUG  src/hw/memory/GDT.cpp:24 - gdt flush
+DEBUG  src/hw/memory/GDT.cpp:26 - tss flush
+DEBUG  src/hw/memory/GDT.cpp:28 - end
+DEBUG  src/hw/memory/MemoryManager.cpp:31 - end
+[ok]
+Initializing interrupts...[ok]
+Initializing timer...DEBUG  src/hw/io/Timer.cpp:18 - init
+DEBUG  src/hw/io/Timer.cpp:36 - end

@@ -8,7 +8,7 @@
 #ifndef UTILS_H_
 #define UTILS_H_
 
-#include "../stdarg.h"
+#include "../common/stdarg.h"
 
 #define PANIC(msg)      panic (__FILE__, __LINE__, msg);
 #define ASSERT(b)       ((b) ? (void) 0 : panic_assert (__FILE__, __LINE__, #b))

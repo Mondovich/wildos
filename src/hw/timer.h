@@ -5,7 +5,7 @@
  *      Author: RaimondoS
  */
 
-#include "../types.h"
+#include "../common/types.h"
 
 #ifndef PIT_H_
 #define PIT_H_

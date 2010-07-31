@@ -8,7 +8,7 @@ TARGET=kernel
 IMG=floppy.img
 GRUB=grub/stage1 grub/stage2 grub/pad
 
-OBJS += ./${BINDIR}/main.o ./${BINDIR}/kernel.o ./${BINDIR}/Prova.o ./${BINDIR}/cppspec.o 
+#OBJS += ./${BINDIR}/main.o ./${BINDIR}/kernel.o ./${BINDIR}/Prova.o ./${BINDIR}/cppspec.o 
 
 
 A_FLAGS=-f elf
@@ -18,11 +18,20 @@ T_FLAG=-T ${SRCDIR}/link.ld -nostdlib -nostartfiles -nodefaultlibs
 
 all: img
 
-include src/asm/make.inc
-include src/boot/make.inc
-include src/fs/make.inc
-include src/hw/make.inc
-include src/utils/make.inc
+include ${SRCDIR}/make.inc
+
+#include src/asm/make.inc
+#include src/boot/make.inc
+#include src/common/make.inc
+#include src/fs/make.inc
+#include src/hw/make.inc
+#include src/hw/cpu/make.inc
+#include src/hw/io/make.inc
+#include src/hw/memory/make.inc
+#include src/hw/video/make.inc
+#include src/kernel/make.inc
+#include src/std/make.inc
+#include src/utils/make.inc
 
 
 ${BINDIR}/%.o: ${SRCDIR}/%.asm
@@ -66,13 +75,11 @@ img: link
 	
 clean:
 	@echo 'Cleaning...' 
-	rm -f -r ${BINDIR} ${OUTDIR}
-	mkdir ${BINDIR}
-	mkdir ${BINDIR}/asm
-	mkdir ${BINDIR}/boot
-	mkdir ${BINDIR}/fs
-	mkdir ${BINDIR}/hw
-	mkdir ${BINDIR}/utils
-	mkdir ${OUTDIR}
+	rm -rf ${BINDIR}/* ${OUTDIR}/*
+	@for dir in ${DIRS}; \
+	do \
+		echo mkdir -p ${BINDIR}/$$dir; \
+		mkdir -p ${BINDIR}/$$dir; \
+	done
 	@echo 'done.'
 	@echo ' '

@@ -7,8 +7,9 @@
 
 #include "array.h"
 #include "../hw/kheap.h"
-#include "../hw/memory.h"
+#include "../hw/memory/MemoryManager.h"
 #include "utils.h"
+#include "string.h"
 
 int8_t standard_lessthan_predicate(type_t a, type_t b) {
 	return (a < b) ? 1 : 0;

@@ -8,7 +8,7 @@
 #ifndef HEAP_H_
 #define HEAP_H_
 
-#include "../types.h"
+#include "../common/types.h"
 #include "../utils/array.h"
 
 #define KHEAP_START         0xC0000000

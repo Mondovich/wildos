@@ -5,7 +5,7 @@
  *      Author: RaimondoS
  */
 
-#include "../types.h"
+#include "../common/types.h"
 #include "isr.h"
 
 #ifndef PAGING_H_

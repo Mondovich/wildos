@@ -11,7 +11,4 @@
 #include "boot/multiboot.h"
 #include "kernel.h"
 
-extern class Multiboot multiboot;
-extern class Kernel kernel;
-
 #endif /* MAIN_H_ */

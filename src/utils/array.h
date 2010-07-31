@@ -5,7 +5,7 @@
  *      Author: RaimondoS
  */
 
-#include "../types.h"
+#include "../common/types.h"
 
 #ifndef ARRAY_H_
 #define ARRAY_H_

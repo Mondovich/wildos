@@ -6,7 +6,7 @@
  */
 
 #include "types.h"
-#include "hw/kheap.h"
+#include "../hw/kheap.h"
 
 // Required to get G++ to link without libstdc++
 void *__gxx_personality_v0 = NULL;
@@ -15,6 +15,10 @@ void *__dso_handle;
 
 extern "C" void __cxa_atexit(void(* f)(void *), void *p, void *d) {
 }
+
+extern "C" void __cxa_pure_virtual(void) {
+}
+;
 
 void *operator new(size_t size) {
 	return kmalloc(size);

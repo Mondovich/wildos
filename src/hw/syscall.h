@@ -8,7 +8,7 @@
 #ifndef SYSCALLS_H_
 #define SYSCALLS_H_
 
-#include "../stdarg.h"
+#include "../common/stdarg.h"
 
 void initialise_syscalls();
 

@@ -5,16 +5,15 @@
  *      Author: RaimondoS
  */
 
-#include "types.h"
-#include "kernel.h"
-#include "boot/multiboot.h"
+#include "../common/types.h"
+#include "../kernel/kernel.h"
+#include "../hw/screen.h"
+#include "../std/iostream.h"
+#include "multiboot.h"
 
 extern uint32_t start_ctors;
 extern uint32_t end_ctors;
 extern uint32_t end;
-
-Multiboot multiboot;
-Kernel kernel;
 
 extern "C" void __main(void) {
 	// Constructor list is defined in the linker script.
@@ -28,9 +27,9 @@ extern "C" void __main(void) {
 
 extern "C" int _main(struct multiboot_t *mboot_ptr, size_t initial_stack) {
 
-	multiboot = Multiboot(mboot_ptr);
+	Multiboot::instance()->init(mboot_ptr);
 
-	kernel.run();
+	Kernel::Kernel::instance()->run();
 
 	return 0;
 }

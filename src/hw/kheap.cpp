@@ -8,7 +8,7 @@
 #include "kheap.h"
 #include "paging.h"
 #include "screen.h"
-#include "../types.h"
+#include "../common/types.h"
 #include "../utils/utils.h"
 #include "../utils/string.h"
 #include "../utils/array.h"
