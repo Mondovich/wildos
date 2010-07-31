@@ -7,9 +7,9 @@
 
 #include "io.h"
 #include "isr.h"
-#include "memory.h"
+#include "memory/MemoryManager.h"
 #include "screen.h"
-#include "../types.h"
+#include "../common/types.h"
 
 isr_t interrupt_handlers[256];
 
@@ -24,6 +24,7 @@ extern "C" void isr_handler(registers_t regs) {
 	 * bit (0x80) is set, regs.int_no will be very large (about 0xFFFFFF80).
 	 */
 	uint8_t int_no = regs.int_no & 0xFF;
+//	std::cout << int_no;
 
 	if (interrupt_handlers[int_no] != 0) {
 		isr_t handler = interrupt_handlers[int_no];

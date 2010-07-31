@@ -110,22 +110,30 @@ isr_common_stub:
 
 [EXTERN irq_handler]
 
+;Hardware::InterruptManager::handler(Registers&)
+[EXTERN _ZN8Hardware16InterruptManager7handlerER9Registers]
+
 ; This is our common IRQ stub. It saves the processor state, sets
 ; up for kernel mode segments, calls the C-level fault handler,
 ; and finally restores the stack frame.
 irq_common_stub:
-    pusha						; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
-
-    mov ax, ds					; Lower 16-bits of eax = ds.
-    push eax					; save the data segment descriptor
-
-    mov ax, 0x10				; load the kernel data segment descriptor
-    mov ds, ax
-    mov es, ax
-    mov fs, ax
-    mov gs, ax
-
-    call irq_handler
+	; Save the registers
+	pusha
+	push ds
+	
+	; Switch to the kernel data segment
+	mov ax, 0x10
+	mov ds, ax
+	mov es, ax
+	
+	; Create a new stackframe
+	xor ebp, ebp
+	
+	; Push the pointer to the InterruptState object
+	mov eax, esp
+	push eax
+  
+    call _ZN8Hardware16InterruptManager7handlerER9Registers
 
     pop ebx						; reload the original data segment descriptor
     mov ds, bx

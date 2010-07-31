@@ -6,7 +6,7 @@
  */
 
 #include "../asm/asm.h"
-#include "../types.h"
+#include "../common/types.h"
 
 size_t getRegister(REGS reg) {
 	size_t result = 0;

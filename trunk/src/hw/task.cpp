@@ -7,9 +7,10 @@
 
 #include "task.h"
 #include "kheap.h"
-#include "memory.h"
+#include "memory/MemoryManager.h"
 #include "../asm/asm.h"
-#include "../types.h"
+#include "../common/types.h"
+#include "../utils/string.h"
 
 // The currently running task.
 volatile task_t *current_task;
@@ -138,7 +139,7 @@ void switch_task() {
 	current_directory = current_task->page_directory;
 
 	// Change our kernel stack over.
-	set_kernel_stack(current_task->kernel_stack + KERNEL_STACK_SIZE);
+	Hardware::MemoryManager::instance()->setKernelStack(current_task->kernel_stack + KERNEL_STACK_SIZE);
 	// Here we:
 	// * Stop interrupts so we don't get interrupted.
 	// * Temporarily put the new EIP location in ECX.
@@ -218,7 +219,7 @@ int getpid() {
 
 void switch_to_user_mode() {
 	// Set up our kernel stack.
-	set_kernel_stack(current_task->kernel_stack + KERNEL_STACK_SIZE);
+	Hardware::MemoryManager::instance()->setKernelStack(current_task->kernel_stack + KERNEL_STACK_SIZE);
 
 	// Set up a stack structure for switching to user mode.
 	asm volatile("  \

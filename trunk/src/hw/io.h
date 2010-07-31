@@ -8,7 +8,7 @@
 #ifndef IO_H_
 #define IO_H_
 
-#include "../types.h"
+#include "../common/types.h"
 
 uint8_t inb(uint16_t port);
 uint16_t inw(uint16_t port);

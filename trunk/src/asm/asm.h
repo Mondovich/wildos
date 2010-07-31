@@ -8,7 +8,7 @@
 #ifndef __ASM_H
 #define __ASM_H
 
-#include "../types.h"
+#include "../common/types.h"
 
 enum REGS {
 	EAX, EBX, EBP, ESP, CR0, CR3

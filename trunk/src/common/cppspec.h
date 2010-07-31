@@ -12,10 +12,10 @@
 
 void *operator new(size_t size);
 void *operator new(size_t size, size_t place);
-void *operator new(size_t size, bool pageAlign, size_t *physAddr=NULL);
+void *operator new(size_t size, bool pageAlign, size_t *physAddr = NULL);
 void *operator new[](size_t size);
-void *operator new[](size_t size, bool pageAlign, size_t *physAddr=NULL);
-void  operator delete(void *p);
-void  operator delete[](void *p);
+void *operator new[](size_t size, bool pageAlign, size_t *physAddr = NULL);
+void operator delete(void *p);
+void operator delete[](void *p);
 
 #endif /* CPPSPEC_H_ */

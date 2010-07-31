@@ -7,11 +7,12 @@
 
 #include "paging.h"
 #include "kheap.h"
-#include "memory.h"
+#include "memory/MemoryManager.h"
 #include "screen.h"
 #include "isr.h"
 #include "../utils/utils.h"
-#include "../types.h"
+#include "../utils/string.h"
+#include "../common/types.h"
 
 size_t *frames;
 size_t nframes;
